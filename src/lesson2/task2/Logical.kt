@@ -46,12 +46,15 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    var vyear = (year / 4) * 4 - year
-    if (vyear == 0) 29 else 28
+    val vmonth = when {
+        (year%400 == 0) -> 29
+        ((year%400 != 0) && (year%100 != 0) && (year%4 == 0)) -> 29
+        else -> 28
+    }
     return when (month) {
         4, 6, 9, 11 -> 30
         //1, 3, 5, 7, 8, 10, 12 -> 31
-        2 -> vyear
+        2 -> vmonth
         else -> 31
     }
 }
