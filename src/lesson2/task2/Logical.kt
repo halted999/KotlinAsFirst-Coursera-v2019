@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.sqrt
 
 /**
  * Пример
@@ -19,11 +20,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean {
-    val num1 = number/1000
-    val num2 = (number - (num1*1000))/100
-    val num3 = (number - ((num1*1000) + (num2*100)))/10
-    val num4 = (number - ((num1*1000) + (num2*100) + (num3*10)))
-    return (num1+num2) == (num3+num4)
+    val num1 = number / 1000
+    val num2 = (number - (num1 * 1000)) / 100
+    val num3 = (number - ((num1 * 1000) + (num2 * 100))) / 10
+    val num4 = (number - ((num1 * 1000) + (num2 * 100) + (num3 * 10)))
+    return (num1 + num2) == (num3 + num4)
 }
 
 /**
@@ -45,20 +46,15 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    return when(month) {
+    var vyear = (year / 4) * 4 - year
+    if (vyear == 0) 29 else 28
+    return when (month) {
         4, 6, 9, 11 -> 30
-        2 -> when ()
+        //1, 3, 5, 7, 8, 10, 12 -> 31
+        2 -> vyear
         else -> 31
     }
-//    return when(year % 4 != 0){
-//        4 -> 30
-//        6 -> 30
-//        9 -> 30
-//        11 -> 30
-//        2 -> 28
-//        else -> 31
-//    }
-    }
+}
 
 /**
  * Средняя
@@ -70,7 +66,10 @@ fun daysInMonth(month: Int, year: Int): Int {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean {
+    val l = r1 +sqrt(sqr(x2 - x1) + sqr(y2 - y1))
+    return r2 >= l
+}
 
 /**
  * Средняя
@@ -81,4 +80,9 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = when {
+    sqr(a * b) <= sqr(r * s) -> true
+    sqr(b * c) <= sqr(r * s) -> true
+    sqr(a * c) <= sqr(r * s) -> true
+    else -> false
+}
